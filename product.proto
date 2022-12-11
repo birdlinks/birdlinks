@@ -1,0 +1,85 @@
+syntax = "proto3";
+
+package service;
+
+service Product {
+  // Create a new product
+  rpc CreateProduct (CreateProductRequest) returns (Response) {}
+  // Get a product by ID
+  rpc GetProduct (GetProductRequest) returns (GetProductResponse) {}
+  // Update a product
+  rpc UpdateProduct (UpdateProductRequest) returns (Response) {}
+  // Delete a product
+  rpc DeleteProduct (DeleteProductRequest) returns (Response) {}
+  // List products
+  rpc ListProduct (ListProductRequest) returns (ListProductResponse) {}
+}
+
+message CreateProductRequest {
+  ProductInfo product = 1;
+}
+
+message GetProductRequest {
+  string id = 1;
+}
+
+message GetProductResponse {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  string price = 4;
+}
+
+message UpdateProductRequest {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  string price = 4;
+}
+
+message DeleteProductRequest {
+  string id = 1;
+}
+
+message ListProductRequest {
+  string name = 1;
+  string description = 2;
+  string price = 3;
+}
+
+message ListProductResponse {
+  repeated ProductInfo products = 1;
+}
+
+message ProductInfo {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  // 1: account-password 2: account-key 3: account-certificate
+  int64 auth_mode = 4;
+  // 1: device, 2: gateway, 3: sub-device
+  int64 device_type = 5;
+  int64 category_id = 6;
+  // 1: other, 2: wifi, 3:2G/3G/4G,4:5G,5:BLE,6:LoRaWAN
+  int64 net_type = 7;
+  // 1: birdlinks json, 2: custom
+  int64 data_format = 8;
+  string product_key = 9;
+  string status = 10;
+}
+
+
+message Response {
+    string message = 1;
+}
+
+message PageInfo {
+    int32 page = 1;
+    int32 size = 2;
+}
+
+message Meta {
+  PageInfo page = 1;
+  int64 total = 2;
+}
+
